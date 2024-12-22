@@ -18,7 +18,7 @@ import { Button } from "../ui/button";
 import { FormError } from "../FormError";
 import { FormSuccess } from "../FormSuccess";
 import { useState, useTransition } from "react";
-import { login } from "@/actions/login";
+import { register } from "@/actions/register";
 
 export function RegisterForm() {
   const [error, setError] = useState<string | undefined>("");
@@ -40,7 +40,7 @@ export function RegisterForm() {
     setSuccess("");
     startTransition(async () => {
       try {
-        const response = await login(data);
+        const response = await register(data);
         setError(response.error);
         setSuccess(response.success);
       } catch (error) {
