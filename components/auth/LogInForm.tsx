@@ -16,13 +16,13 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FormError } from "../FormError";
-import { FormSuccess } from "../FormSuccess";
+
 import { useState, useTransition } from "react";
 import { login } from "@/actions/login";
 
 export function LogInForm() {
   const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
+
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -36,12 +36,10 @@ export function LogInForm() {
     console.log(data);
 
     setError("");
-    setSuccess("");
     startTransition(async () => {
       try {
         const response = await login(data);
-        setError(response.error);
-        setSuccess(response.success);
+        setError(response?.error);
       } catch (error) {
         console.log(error);
       }
@@ -89,7 +87,6 @@ export function LogInForm() {
               )}
             />
             <FormError message={error} />
-            <FormSuccess message={success} />
           </div>
           <Button
             disabled={isPending}

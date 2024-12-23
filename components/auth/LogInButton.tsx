@@ -11,7 +11,6 @@ interface loginButtonType {
 export default function LogInButton({
   children,
   mode = "redirect",
-  asChild,
 }: loginButtonType) {
   const router = useRouter();
   const handleClick = () => {
