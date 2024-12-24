@@ -5,7 +5,29 @@ import { db } from "./lib/db";
 import { getUserById } from "./data/user";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
   callbacks: {
+    // async signIn({ user }) {
+    //   if (user.id) {
+    //     const existingUser = await getUserById(user.id);
+    //     if (!existingUser || !existingUser.emailVerified) {
+    //       return false;
+    //     }
+    //   }
+
+    //   return true;
+    // },
     async session({ token, session }) {
       console.log({ sessionToken: token });
       if (session.user && token.sub) {
@@ -16,7 +38,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token }) {
       if (!token.sub) {
         return token;
       }
