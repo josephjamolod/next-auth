@@ -20,6 +20,7 @@ import { FormError } from "../FormError";
 import { useState, useTransition } from "react";
 import { login } from "@/actions/login";
 import { useSearchParams } from "next/navigation";
+import { FormSuccess } from "../FormSuccess";
 
 export function LogInForm() {
   const searchParams = useSearchParams();
@@ -28,6 +29,7 @@ export function LogInForm() {
       ? "Email already used with different provider!"
       : "";
   const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -44,6 +46,7 @@ export function LogInForm() {
       try {
         const response = await login(data);
         setError(response?.error);
+        setSuccess(response?.success);
       } catch (error) {
         console.log(error);
       }
@@ -91,6 +94,7 @@ export function LogInForm() {
               )}
             />
             <FormError message={error || urlError} />
+            <FormSuccess message={success} />
           </div>
           <Button
             disabled={isPending}
