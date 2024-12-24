@@ -1,7 +1,6 @@
 import { UserRole } from "@prisma/client";
 import { DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
-// import { AdapterUser } from "next-auth/adapters";
 
 export type ExtendedUser = DefaultSession["user"] & {
   role: UserRole;
