@@ -19,8 +19,14 @@ import { FormError } from "../FormError";
 
 import { useState, useTransition } from "react";
 import { login } from "@/actions/login";
+import { useSearchParams } from "next/navigation";
 
 export function LogInForm() {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already used with different provider!"
+      : "";
   const [error, setError] = useState<string | undefined>("");
 
   const [isPending, startTransition] = useTransition();
@@ -33,8 +39,6 @@ export function LogInForm() {
   });
 
   const handleSubmit = (data: z.infer<typeof loginSchema>) => {
-    console.log(data);
-
     setError("");
     startTransition(async () => {
       try {
@@ -86,7 +90,7 @@ export function LogInForm() {
                 </FormItem>
               )}
             />
-            <FormError message={error} />
+            <FormError message={error || urlError} />
           </div>
           <Button
             disabled={isPending}
