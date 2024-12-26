@@ -6,7 +6,7 @@ interface SendVerificationMailProp {
   token: VerificationToken;
 }
 
-export const sendVerificationMail = ({
+export const sendVerificationMail = async ({
   user,
   token,
 }: SendVerificationMailProp) => {
