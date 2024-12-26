@@ -25,7 +25,7 @@ export const sendVerificationMail = ({
     to: user.email!, // list of receivers
     subject: "Verify your Email", // Subject line
     html: `<p>Hello ${user.name}, verify your email by clicking this link:</p>
-    <a href="${process.env.CLIENT_URL}/auth/verifyEmail/?token=${token}">Verify Your Email</a>`, // html body
+    <a href="${process.env.CLIENT_URL}/auth/verifyEmail/?token=${token.token}">Verify Your Email</a>`, // html body
   };
 
   transporter.sendMail(mailOptions, (error) => {
