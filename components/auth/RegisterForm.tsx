@@ -19,6 +19,7 @@ import { FormError } from "../FormError";
 import { FormSuccess } from "../FormSuccess";
 import { useState, useTransition } from "react";
 import { register } from "@/actions/register";
+import Link from "next/link";
 
 export function RegisterForm() {
   const [error, setError] = useState<string | undefined>("");
@@ -110,15 +111,23 @@ export function RegisterForm() {
             <FormError message={error} />
             <FormSuccess message={success} />
           </div>
-          <Button
-            disabled={isPending}
-            type="submit"
-            className="w-full"
-            variant={"default"}
-            size={"lg"}
-          >
-            Create an account
-          </Button>
+          <div className="flex flex-col gap-y-2">
+            <Link
+              href={"/auth/resetPassword"}
+              className="text-xs hover:underline px-2"
+            >
+              Forgot Password?
+            </Link>
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="w-full"
+              variant={"default"}
+              size={"lg"}
+            >
+              Create an account
+            </Button>
+          </div>
         </form>
       </Form>
     </CardWrapper>

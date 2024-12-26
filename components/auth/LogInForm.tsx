@@ -21,6 +21,7 @@ import { useState, useTransition } from "react";
 import { login } from "@/actions/login";
 import { useSearchParams } from "next/navigation";
 import { FormSuccess } from "../FormSuccess";
+import Link from "next/link";
 
 export function LogInForm() {
   const searchParams = useSearchParams();
@@ -42,6 +43,7 @@ export function LogInForm() {
 
   const handleSubmit = (data: z.infer<typeof loginSchema>) => {
     setError("");
+    setSuccess("");
     startTransition(async () => {
       try {
         const response = await login(data);
@@ -96,15 +98,24 @@ export function LogInForm() {
             <FormError message={error || urlError} />
             <FormSuccess message={success} />
           </div>
-          <Button
-            disabled={isPending}
-            type="submit"
-            className="w-full"
-            variant={"default"}
-            size={"lg"}
-          >
-            Sign In
-          </Button>
+
+          <div className="flex flex-col gap-y-2">
+            <Link
+              href={"/auth/resetPassword"}
+              className="text-xs hover:underline px-2"
+            >
+              Forgot Password?
+            </Link>
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="w-full"
+              variant={"default"}
+              size={"lg"}
+            >
+              Sign In
+            </Button>
+          </div>
         </form>
       </Form>
     </CardWrapper>
