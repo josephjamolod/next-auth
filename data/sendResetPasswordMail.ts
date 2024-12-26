@@ -15,7 +15,7 @@ export const sendResetPasswordMail = async ({
     to: user.email!, // list of receivers
     subject: "Reset your password", // Subject line
     html: `<p>Hello ${user.name}, reset your password by clicking this link:</p>
-    <a href="${process.env.CLIENT_URL}/auth/resetPassword/?token=${token.token}">Reset Your Password</a>`, // html body
+    <a href="${process.env.CLIENT_URL}/auth/newPassword/?token=${token.token}">Reset Your Password</a>`, // html body
   };
 
   transporter.sendMail(mailOptions, (error) => {
