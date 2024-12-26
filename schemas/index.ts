@@ -2,7 +2,7 @@ import * as z from "zod";
 
 export const loginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(1, { message: "Please enter you password" }),
+  password: z.string().min(8, { message: "Password minimum 8 characters" }),
 });
 
 export const registerSchema = z.object({
@@ -17,4 +17,8 @@ export const registerSchema = z.object({
 
 export const resetPasswordSchema = z.object({
   email: z.string().email(),
+});
+
+export const newPasswordSchema = z.object({
+  password: z.string().min(8, { message: "Password minimum 8 characters" }),
 });
