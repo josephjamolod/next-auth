@@ -22,7 +22,7 @@ import { useState, useTransition } from "react";
 import { FormSuccess } from "../FormSuccess";
 import { resetPassword } from "@/actions/resetPassword";
 
-export function ResetPasswodForm() {
+export function ResetPasswordForm() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 

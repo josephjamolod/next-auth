@@ -21,7 +21,7 @@ export const resetPassword = async (
     }
     if (existingUser.email) {
       const resetPasswordToken = await generateResetPasswordToken(
-        existingUser.email!
+        existingUser.email
       );
       if (resetPasswordToken) {
         await sendResetPasswordMail({

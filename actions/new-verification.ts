@@ -6,6 +6,9 @@ import { db } from "@/lib/db";
 
 export const newVerification = async (token: string) => {
   try {
+    if (!token) {
+      return { error: "Missing token!" };
+    }
     const existingToken = await getVerificationTokenByToken(token);
 
     if (!existingToken) {
