@@ -31,6 +31,7 @@ export function LogInForm() {
       : "";
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+  const [twoFactor, setTwoFactor] = useState(false);
 
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -38,6 +39,7 @@ export function LogInForm() {
     defaultValues: {
       email: "",
       password: "",
+      twoFactorCode: "",
     },
   });
 
@@ -49,7 +51,11 @@ export function LogInForm() {
         const response = await login(data);
         setError(response?.error);
         setSuccess(response?.success);
+        if (response?.twoFactor) {
+          setTwoFactor(response.twoFactor);
+        }
       } catch (error) {
+        setError("Something went wrong");
         console.log(error);
       }
     });
@@ -64,37 +70,65 @@ export function LogInForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={isPending}
-                      {...field}
-                      type="email"
-                      placeholder="your_email@example.com"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input disabled={isPending} {...field} type="password" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {twoFactor ? (
+              <FormField
+                control={form.control}
+                name="twoFactorCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Two Factor Code</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isPending}
+                        {...field}
+                        type="text"
+                        placeholder="123456"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isPending}
+                          {...field}
+                          type="email"
+                          placeholder="your_email@example.com"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isPending}
+                          {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
+
             <FormError message={error || urlError} />
             <FormSuccess message={success} />
           </div>
@@ -113,7 +147,7 @@ export function LogInForm() {
               variant={"default"}
               size={"lg"}
             >
-              Sign In
+              {twoFactor ? "Confirm" : "Sign In"}
             </Button>
           </div>
         </form>
