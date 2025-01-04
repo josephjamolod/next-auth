@@ -13,8 +13,8 @@ export const sendTwoFactorMail = async ({
   const mailOptions = {
     from: `"Next-Auth" <${process.env.EMAIL}>`, // sender address
     to: user.email!, // list of receivers
-    subject: "Two Factor Code", // Subject line
-    html: `<p>Hello ${user.name}, here's your two factor code:</p>
+    subject: "2FA Code", // Subject line
+    html: `<p>Hello ${user.name}, here's your 2FA code:</p>
     <p> ${token.token}</p>`, // html body
   };
 
