@@ -1,6 +1,6 @@
 "use server";
 
-import { sendResetPasswordMail } from "@/data/sendResetPasswordMail";
+import { sendResetPasswordMail } from "@/mail/sendResetPasswordMail";
 import { getUserByEmail } from "@/data/user";
 import { generateResetPasswordToken } from "@/lib/tokens";
 import { resetPasswordSchema } from "@/schemas";
