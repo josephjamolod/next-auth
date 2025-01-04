@@ -3,6 +3,10 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import authConfig from "./auth.config";
 import { db } from "./lib/db";
 import { getUserById } from "./data/user";
+import {
+  deleteTwoFactorConfirmation,
+  getTwoFactorConfirmationByUserId,
+} from "./data/two-factor-confirmation";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
@@ -28,6 +32,17 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (!existingUser || !existingUser.emailVerified) {
         return false;
       }
+
+      //if 2FA enable, dont let user log in without 2FConfirmation
+      //delete the 2FConfirmation after
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id
+        );
+        if (!twoFactorConfirmation) return false;
+        await deleteTwoFactorConfirmation(twoFactorConfirmation.id);
+      }
+
       return true;
     },
     async session({ token, session }) {
