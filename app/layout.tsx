@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AuthProvider from "@/sessionProvider/authProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,12 +13,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 to-yellow-50`}
-      >
-        {children}
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body
+          className={`bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 to-yellow-50`}
+        >
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
