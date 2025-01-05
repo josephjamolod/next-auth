@@ -1,16 +1,11 @@
-import { auth } from "@/auth";
-import SignOutBtn from "@/components/SignOutBtn";
+"use client";
 
+import SignOutBtn from "@/components/SignOutBtn";
+import { useCurrentUser } from "@/hooks/use-current-user";
 import React from "react";
 
-export default async function Settings() {
-  const session = await auth();
-  // console.log(session?.user.role);
+export default function Settings() {
+  const user = useCurrentUser();
 
-  return (
-    <div>
-      {JSON.stringify(session)}
-      <SignOutBtn />
-    </div>
-  );
+  return <SignOutBtn />;
 }
