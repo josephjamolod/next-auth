@@ -7,10 +7,8 @@ import { logOut } from "@/actions/logout";
 export default function SignOutBtn() {
   const handleSignOut = async () => await logOut();
   return (
-    <div>
-      <Button variant={"destructive"} onClick={handleSignOut}>
-        Sign Out
-      </Button>
-    </div>
+    <Button variant={"destructive"} onClick={handleSignOut}>
+      Sign Out
+    </Button>
   );
 }
