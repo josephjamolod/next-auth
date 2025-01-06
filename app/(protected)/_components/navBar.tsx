@@ -20,7 +20,7 @@ export default function NavBar() {
           <Link href={"/client"}>Client</Link>
         </Button>
         <Button variant={path === "/admin" ? "outline" : "default"} asChild>
-          <Link href={"/admin"}>Admind</Link>
+          <Link href={"/admin"}>Admin</Link>
         </Button>
         <Button variant={path === "/settings" ? "outline" : "default"} asChild>
           <Link href={"/settings"}>Settings</Link>
