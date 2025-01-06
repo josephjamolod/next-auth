@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AuthProvider from "@/sessionProvider/authProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,6 +19,7 @@ export default function RootLayout({
         <body
           className={`bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 to-yellow-50`}
         >
+          <Toaster />
           {children}
         </body>
       </html>
