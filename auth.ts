@@ -50,6 +50,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (session.user && token.sub) {
         session.user.id = token.sub;
       }
+      if (session.user && token.name) {
+        session.user.name = token.name;
+      }
+      if (session.user && token.email) {
+        session.user.email = token.email;
+      }
       if (session.user && token.role) {
         session.user.role = token.role;
       }
@@ -67,6 +73,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         return token;
       }
       // console.log(existingUser);
+      token.name = existingUser.name;
+      token.email = existingUser.email;
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       return token;
