@@ -7,6 +7,7 @@ import {
   deleteTwoFactorConfirmation,
   getTwoFactorConfirmationByUserId,
 } from "./data/two-factor-confirmation";
+import { getAccountByUserId } from "./data/account";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
@@ -45,6 +46,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
       return true;
     },
+
     async session({ token, session }) {
       console.log({ sessionToken: token });
       if (session.user && token.sub) {
@@ -62,6 +64,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (session.user && token.isTwoFactorEnabled) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
       }
+      if (session.user && token.isOauth) {
+        session.user.isOauth = token.isOauth;
+      }
       return session;
     },
     async jwt({ token }) {
@@ -73,6 +78,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         return token;
       }
       // console.log(existingUser);
+      const existingAccount = await getAccountByUserId(existingUser.id);
+      token.isOauth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
