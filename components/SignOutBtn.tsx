@@ -5,7 +5,10 @@ import { Button } from "./ui/button";
 import { logOut } from "@/actions/logout";
 
 export default function SignOutBtn() {
-  const handleSignOut = async () => await logOut();
+  const handleSignOut = async () => {
+    await logOut();
+    window.location.reload();
+  };
   return (
     <Button variant={"destructive"} onClick={handleSignOut}>
       Sign Out
