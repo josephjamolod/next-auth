@@ -1,6 +1,5 @@
 import { transporter } from "@/lib/transporter";
 import { User, VerificationToken } from "@prisma/client";
-import { resolve } from "path";
 
 interface SendResetPasswordMailProp {
   user: User;
