@@ -35,7 +35,6 @@ export function ResetPasswordForm() {
   });
 
   const handleSubmit = (data: z.infer<typeof resetPasswordSchema>) => {
-    console.log(data);
     setSuccess("");
     setError("");
     startTransition(async () => {

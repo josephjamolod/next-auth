@@ -10,9 +10,6 @@ export const newVerification = async (token: string) => {
       return { error: "Missing token!" };
     }
     const existingToken = await getVerificationTokenByToken(token);
-    console.log("red");
-
-    console.log(existingToken?.email);
 
     if (!existingToken) {
       return { error: "Invalid token!" };

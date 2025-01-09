@@ -26,7 +26,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
       password: hashPassword,
     },
   });
-  console.log(user);
+
   if (user.email) {
     const verificationToken = await generateVerificationToken(user.email);
     if (verificationToken)

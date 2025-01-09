@@ -26,7 +26,6 @@ import Link from "next/link";
 export function LogInForm() {
   const searchParams = useSearchParams();
   const callBackUrl = searchParams.get("callback");
-  // console.log(callBackUrl);
 
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
