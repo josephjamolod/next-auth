@@ -18,11 +18,15 @@ export const sendTwoFactorMail = async ({
     <p> ${token.token}</p>`, // html body
   };
 
-  transporter.sendMail(mailOptions, (error) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Two Factor Email Sent");
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log("Two Factor Email Sent!");
+        resolve(info);
+      }
+    });
   });
 };

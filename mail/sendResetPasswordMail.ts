@@ -29,22 +29,4 @@ export const sendResetPasswordMail = async ({
       }
     });
   });
-  // await new Promise((resolve, reject) => {
-  //   // send mail
-  //   transporter.sendMail(mailData, (err, info) => {
-  //       if (err) {
-  //           console.error(err);
-  //           reject(err);
-  //       } else {
-  //           console.log(info);
-  //           resolve(info);
-  //       }
-  //   }
-  // transporter.sendMail(mailOptions, (error) => {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log("Email for reset password sent!");
-  //   }
-  // });
 };

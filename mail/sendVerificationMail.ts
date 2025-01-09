@@ -18,11 +18,15 @@ export const sendVerificationMail = async ({
     <a href="${process.env.CLIENT_URL}/auth/verifyEmail/?token=${token.token}">Verify Your Email</a>`, // html body
   };
 
-  transporter.sendMail(mailOptions, (error) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Verification Email Sent");
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log("Verification Email Sent");
+        resolve(info);
+      }
+    });
   });
 };
