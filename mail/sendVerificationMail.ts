@@ -1,20 +1,20 @@
 import { transporter } from "@/lib/transporter";
-import { User, VerificationToken } from "@prisma/client";
+import { VerificationToken } from "@prisma/client";
 
 interface SendVerificationMailProp {
-  user: User;
+  userEmail: string;
   token: VerificationToken;
 }
 
 export const sendVerificationMail = async ({
-  user,
+  userEmail,
   token,
 }: SendVerificationMailProp) => {
   const mailOptions = {
     from: `"Next-Auth" <${process.env.EMAIL}>`, // sender address
-    to: user.email!, // list of receivers
+    to: userEmail, // list of receivers
     subject: "Verify your Email", // Subject line
-    html: `<p>Hello ${user.name}, verify your email by clicking this link:</p>
+    html: `<p>Hello ${userEmail}, verify your email by clicking this link:</p>
     <a href="${process.env.CLIENT_URL}/auth/verifyEmail/?token=${token.token}">Verify Your Email</a>`, // html body
   };
 
